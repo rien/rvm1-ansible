@@ -32,9 +32,7 @@
   check_mode: no # Run in normal mode when in --check mode (http://docs.ansible.com/ansible/playbooks_checkmode.html)
 
 - name: Install bundler if not installed
-  shell: >
-    ls {{ rvm1_install_path }}/wrappers/{{ item.stdout }}
-    | if ! grep "^bundler " ; then {{ rvm1_install_path }}/wrappers/{{ item.stdout }}/gem install bundler ; fi
+  shell: "ls {{ rvm1_install_path }}/wrappers/{{ item.stdout }} | if ! grep '^bundler ' ; then {{ rvm1_install_path }}/wrappers/{{ item.stdout }}/gem install bundler:2 ; fi"
   args:
     creates: '{{ rvm1_install_path }}/wrappers/{{ item.stdout }}/bundler'
   with_items: '{{ ruby_patch.results }}'
